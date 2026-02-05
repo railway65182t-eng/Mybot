@@ -1,12 +1,24 @@
 import os
-import telebot
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-TOKEN = os.getenv("8584046657:AAGk-Q65y-pmwr6dnAYiLIl1Oe6nuFaqkOI")
-bot = telebot.TeleBot(TOKEN)
+# گرفتن توکن از متغیر محیطی
+TOKEN = os.getenv("BOT_TOKEN")
 
-@bot.message_handler(commands=['start'])
-def start(message):
-    bot.reply_to(message, "سلام! ربات فعاله ✅")
+if not TOKEN:
+    raise Exception("BOT_TOKEN is not defined")
 
-print("Bot is running...")
-bot.infinity_polling()
+# دستور /start
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("✅ ربات با موفقیت اجرا شد!")
+
+def main():
+    app = ApplicationBuilder().token(TOKEN).build()
+
+    app.add_handler(CommandHandler("start", start))
+
+    print("Bot is running...")
+    app.run_polling()
+
+if __name__ == "__main__":
+    main()
