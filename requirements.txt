@@ -1,1 +1,4 @@
-python-telegram-bot==20.0
+python-telegram-bot==20.1
+pytesseract==0.3.8
+Pillow==8.3.2
+opencv-python==4.5.3
